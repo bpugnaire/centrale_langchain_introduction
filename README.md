@@ -1,29 +1,119 @@
-# Introduction to LangChain and LLM APIs
+# TP LangChain 1.0 — Construire un agent RAG avec Mistral AI
 
-Course materials for the LangChain and LLM API introduction course at Centrale.
+TP de 2h30 destiné aux étudiants de dernière année d'école d'ingénieurs.
 
-## Overview
+**Objectif :** maîtriser les fondamentaux de LangChain 1.0 — modèles, agents, mémoire, tools —
+puis construire un chatbot RAG et l'exposer via une API REST FastAPI.
 
-This course covers the fundamentals of building applications with Large Language Models (LLMs) using the LangChain framework and various LLM APIs.
+---
 
-## Topics
-
-- LLM API basics (OpenAI, Anthropic, etc.)
-- LangChain core concepts (chains, prompts, memory, agents)
-- Building RAG (Retrieval-Augmented Generation) pipelines
-- Practical applications and use cases
-
-## Structure
+## Structure du projet
 
 ```
 centrale_langchain_introduction/
-├── notebooks/       # Jupyter notebooks for each session
-├── slides/          # Course slides
-└── resources/       # Additional resources and references
+├── data/                          # Vos fichiers PDF (à ajouter manuellement)
+│   └── faiss_index/               # Index FAISS généré par le notebook
+├── notebooks/
+│   └── tp_langchain_exploration.ipynb   # Phase 1 — exploration guidée
+├── src/
+│   ├── __init__.py
+│   ├── rag_engine.py              # Phase 2 — moteur RAG (get_rag_agent)
+│   └── main.py                    # Phase 2 — API FastAPI
+├── .env.example                   # Template de configuration
+├── requirements.txt
+└── README.md
 ```
 
-## Getting Started
+---
+
+## Prérequis
+
+- Python 3.11+
+- Une clé API Mistral AI (https://console.mistral.ai/)
+- [`uv`](https://docs.astral.sh/uv/) pour la gestion des dépendances
+
+---
+
+## Installation
 
 ```bash
-pip install langchain openai
+# 1. Cloner le dépôt
+git clone <url-du-repo>
+cd centrale_langchain_introduction
+
+# 2. Installer uv (si ce n'est pas déjà fait)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 3. Créer l'environnement virtuel et installer les dépendances
+uv venv
+source .venv/bin/activate        # Linux / macOS
+# .venv\Scripts\activate         # Windows
+
+uv pip install -r requirements.txt
+
+# 4. Configurer la clé API
+cp .env.example .env
+# Éditez .env et renseignez votre MISTRAL_API_KEY
 ```
+
+---
+
+## Déroulement du TP
+
+### Phase 1 — Exploration (notebook)
+
+1. Placez un ou plusieurs fichiers PDF dans le dossier `data/`
+2. Lancez Jupyter :
+   ```bash
+   jupyter notebook notebooks/tp_langchain_exploration.ipynb
+   ```
+3. Complétez les blocs `# TODO` dans les trois parties :
+
+   | Partie | Concepts clés |
+   |---|---|
+   | **1 — Modèle & Prompts** | `ChatMistralAI`, `.invoke()`, `SystemMessage`, `HumanMessage` |
+   | **2 — Agent & Mémoire** | `create_agent`, `InMemorySaver`, `thread_id`, `.stream()` |
+   | **3 — RAG** | `FAISS`, `MistralAIEmbeddings`, `@tool`, `create_agent` avec retrieval |
+
+> À la fin de la Partie 3, l'index FAISS est sauvegardé dans `data/faiss_index/`.
+
+### Phase 2 — Industrialisation (API FastAPI)
+
+1. Complétez `src/rag_engine.py` — copiez le `@tool` et le `create_agent` de la Partie 3
+2. Complétez `src/main.py` — implémentez l'invocation dans l'endpoint `/chat`
+3. Démarrez l'API :
+   ```bash
+   uvicorn src.main:app --reload
+   ```
+4. Testez :
+   ```bash
+   # Vérification
+   curl http://localhost:8000/health
+
+   # Question au chatbot
+   curl -X POST http://localhost:8000/chat \
+        -H 'Content-Type: application/json' \
+        -d '{"question": "De quoi parle le document ?", "session_id": "test-1"}'
+
+   # Deuxième question (même session) — teste la mémoire
+   curl -X POST http://localhost:8000/chat \
+        -H 'Content-Type: application/json' \
+        -d '{"question": "Peux-tu développer ?", "session_id": "test-1"}'
+   ```
+5. Documentation interactive : http://localhost:8000/docs
+
+---
+
+## Stack technique (LangChain 1.0)
+
+| Composant | Technologie |
+|---|---|
+| LLM | `ChatMistralAI` via `langchain-mistralai` |
+| Initialisation de l'agent | `create_agent` (`langchain.agents`) |
+| Tools | `@tool` decorator (`langchain.tools`) |
+| Mémoire | `InMemorySaver` + `thread_id` (`langgraph`) |
+| Embeddings | `MistralAIEmbeddings` (modèle `mistral-embed`) |
+| Base vectorielle | FAISS (`faiss-cpu`) |
+| Chargement PDF | `PyPDFDirectoryLoader` (`pypdf`) |
+| API | FastAPI + Uvicorn |
+| Gestion des secrets | `python-dotenv` |
