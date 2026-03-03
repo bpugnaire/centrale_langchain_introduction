@@ -30,7 +30,6 @@ centrale_langchain_introduction/
 
 ## Prérequis
 
-- Python 3.13 (installé automatiquement par `uv`)
 - Une clé API Mistral AI (https://console.mistral.ai/)
 - [`uv`](https://docs.astral.sh/uv/) pour la gestion des dépendances
 
@@ -38,24 +37,49 @@ centrale_langchain_introduction/
 
 ## Installation
 
+### 1. Cloner le dépôt
+
 ```bash
-# 1. Cloner le dépôt
 git clone <url-du-repo>
 cd centrale_langchain_introduction
-
-# 2. Installer uv (si ce n'est pas déjà fait)
-Aller sur https://docs.astral.sh/uv/getting-started/installation/#standalone-installer
-et suivre les instructions
-
-# 3. Créer l'environnement Python 3.13 et installer les dépendances
-uv sync
-source .venv/bin/activate        # Linux / macOS
-# .venv\Scripts\activate         # Windows
-
-# 4. Configurer la clé API
-cp .env.example .env
-# Éditez .env et renseignez votre MISTRAL_API_KEY
 ```
+
+### 2. Installer uv
+
+**macOS / Linux**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell)**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+### 3. Installer Python 3.13 et les dépendances
+
+**macOS / Linux**
+```bash
+uv sync
+source .venv/bin/activate
+```
+
+**Windows** — `uv sync` peut échouer sur le téléchargement automatique de Python.
+Installez d'abord Python 3.13 explicitement :
+```powershell
+uv python install 3.13
+uv sync
+.venv\Scripts\activate
+```
+
+### 4. Configurer la clé API
+
+```bash
+cp .env.example .env   # Linux / macOS
+# copy .env.example .env   # Windows
+```
+
+Éditez `.env` et renseignez votre `MISTRAL_API_KEY`.
 
 ---
 
