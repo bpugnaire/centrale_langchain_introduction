@@ -1,6 +1,6 @@
 # TP LangChain 1.0 — Construire un agent RAG avec Mistral AI
 
-TP de 2h30 destiné aux étudiants de dernière année d'école d'ingénieurs.
+TP destiné aux étudiants de dernière année d'école d'ingénieurs.
 
 **Objectif :** maîtriser les fondamentaux de LangChain 1.0 — modèles, agents, mémoire, tools —
 puis construire un chatbot RAG et l'exposer via une API REST FastAPI.
@@ -19,6 +19,7 @@ centrale_langchain_introduction/
 │   ├── __init__.py
 │   ├── rag_engine.py              # Phase 2 — moteur RAG (get_rag_agent)
 │   └── main.py                    # Phase 2 — API FastAPI
+├── app.py                         # Phase 3 — interface Chainlit
 ├── .env.example                   # Template de configuration
 ├── requirements.txt
 └── README.md
