@@ -44,7 +44,8 @@ git clone <url-du-repo>
 cd centrale_langchain_introduction
 
 # 2. Installer uv (si ce n'est pas déjà fait)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+Aller sur https://docs.astral.sh/uv/getting-started/installation/#standalone-installer
+et suivre les instructions
 
 # 3. Créer l'environnement Python 3.13 et installer les dépendances
 uv sync
