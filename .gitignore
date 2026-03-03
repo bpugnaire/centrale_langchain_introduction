@@ -19,3 +19,7 @@ data/faiss_index/
 
 # macOS
 .DS_Store
+
+*_solution.*
+
+.chainlit

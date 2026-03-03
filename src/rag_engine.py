@@ -26,9 +26,12 @@ FAISS_INDEX_PATH = str(DATA_DIR / "faiss_index")
 PDF_DIR = str(DATA_DIR)
 
 RAG_SYSTEM_PROMPT = (
-    "Tu es un assistant expert. Tu as accès à un outil de recherche documentaire. "
-    "Utilise-le pour répondre aux questions en te basant sur les documents disponibles. "
-    "Si la réponse n'est pas dans les documents, dis-le clairement. "
+    "Tu es un assistant expert en analyse documentaire. "
+    "Tu as UNIQUEMENT accès aux informations contenues dans les documents chargés dans le système. "
+    "RÈGLE ABSOLUE : avant de répondre à n'importe quelle question, tu DOIS appeler l'outil "
+    "`retrieve_context` avec une requête de recherche pertinente. "
+    "Ne réponds jamais sans avoir d'abord consulté les documents via cet outil. "
+    "Si le contexte récupéré ne contient pas la réponse, indique-le clairement sans inventer. "
     "Réponds toujours en français."
 )
 
@@ -119,7 +122,7 @@ def get_rag_agent():
 
     @tool(response_format="content_and_artifact")
     def retrieve_context(query: str):
-        # TODO: implémentez le tool (copiez depuis le notebook)
+        # TODO: implémentez le tool (voir Partie 3 du notebook ou rag_engine_solution.py)
         ...
 
     # ------------------------------------------------------------------

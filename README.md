@@ -102,6 +102,20 @@ cp .env.example .env
    ```
 5. Documentation interactive : http://localhost:8000/docs
 
+### Phase 3 — Interface Chainlit (optionnel)
+
+```bash
+chainlit run app.py
+```
+
+Ouvre `http://localhost:8000` dans votre navigateur. Chaque onglet / session
+dispose de sa propre mémoire de conversation.
+
+L'interface affiche :
+- les étapes de raisonnement de l'agent (quel outil a été appelé, avec quelle requête)
+- les tokens streamés en temps réel
+- l'historique de la conversation
+
 ---
 
 ## Stack technique (LangChain 1.0)
@@ -116,4 +130,5 @@ cp .env.example .env
 | Base vectorielle | FAISS (`faiss-cpu`) |
 | Chargement PDF | `PyPDFDirectoryLoader` (`pypdf`) |
 | API | FastAPI + Uvicorn |
+| Interface chat | Chainlit |
 | Gestion des secrets | `python-dotenv` |
