@@ -1,0 +1,22 @@
+[project]
+name = "centrale-langchain-introduction"
+version = "0.1.0"
+description = "TP LangChain 1.0 — Construire un agent RAG avec Mistral AI"
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.0.0",
+    "langchain-mistralai>=0.2.0",
+    "langchain-community>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-text-splitters>=0.3.0",
+    "langgraph>=0.3.0",
+    "pypdf>=4.0.0",
+    "faiss-cpu>=1.8.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "python-dotenv>=1.0.0",
+    "jupyter>=1.1.0",
+    "ipykernel>=6.29.0",
+    "chainlit>=2.0.0",
+]

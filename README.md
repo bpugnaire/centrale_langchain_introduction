@@ -21,7 +21,8 @@ centrale_langchain_introduction/
 │   └── main.py                    # Phase 2 — API FastAPI
 ├── app.py                         # Phase 3 — interface Chainlit
 ├── .env.example                   # Template de configuration
-├── requirements.txt
+├── .python-version                # Version Python utilisée par uv (3.13)
+├── pyproject.toml                 # Dépendances du projet
 └── README.md
 ```
 
@@ -29,7 +30,7 @@ centrale_langchain_introduction/
 
 ## Prérequis
 
-- Python 3.11+
+- Python 3.13 (installé automatiquement par `uv`)
 - Une clé API Mistral AI (https://console.mistral.ai/)
 - [`uv`](https://docs.astral.sh/uv/) pour la gestion des dépendances
 
@@ -45,12 +46,10 @@ cd centrale_langchain_introduction
 # 2. Installer uv (si ce n'est pas déjà fait)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 3. Créer l'environnement virtuel et installer les dépendances
-uv venv
+# 3. Créer l'environnement Python 3.13 et installer les dépendances
+uv sync
 source .venv/bin/activate        # Linux / macOS
 # .venv\Scripts\activate         # Windows
-
-uv pip install -r requirements.txt
 
 # 4. Configurer la clé API
 cp .env.example .env
@@ -133,3 +132,4 @@ L'interface affiche :
 | API | FastAPI + Uvicorn |
 | Interface chat | Chainlit |
 | Gestion des secrets | `python-dotenv` |
+| Gestion des dépendances | `uv` + `pyproject.toml` |
